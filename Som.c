@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
+#include <float.h>
+#include <stdbool.h>
 
 #define L 150
 #define C 4
@@ -43,6 +46,7 @@ struct network {
 };
 typedef struct network t_net;
 
+// To read from the file
 double **Lfichier(char *path) {
     double **Matrice = (double **)malloc(L * sizeof(double*));
     int i;
@@ -96,6 +100,7 @@ Donnees1* VectDon(int size) {
     res = (Donnees1*) malloc(L*sizeof(Donnees1));
     return res;
 }
+// create matrice function
 double** MatrNorm(double **matr) {
     int i,j;
     double sum=0.0,temp;
@@ -121,6 +126,7 @@ double* moyenne(double **x,int length,int width){
         }
      return ans;
 }
+//initialization
 Donnees1* InitiaDon(Donnees1 *MatriceDon,double **ans) {
     int i;
     for (i=0;i<L;i++){
@@ -163,6 +169,8 @@ t_node** fillNeurons(t_node **nodes,double *array,int a,int b) {
     }
     return nodes;
 }
+
+//update function in this structure
 double* Updateweight (double *w,double *x,int alpha,int a,int b,int l,int c,int r) {
     double *ans;
     int i;
@@ -175,6 +183,8 @@ double* Updateweight (double *w,double *x,int alpha,int a,int b,int l,int c,int 
     }
     return ans;
 }
+
+// shuffle fuction Donnees1
 Donnees1* Shuffle(Donnees1* MatriceDon) {
     int i,alea,temp;
     char *fname;
@@ -192,6 +202,8 @@ Donnees1* Shuffle(Donnees1* MatriceDon) {
     }
     return MatriceDon;
 }
+//Learn algorithm
+
 t_ListBmu* Findbmu (t_net *reseau,int a,int b) {
     t_ListBmu *res;
     res = (t_ListBmu*) malloc(sizeof(t_ListBmu));
@@ -285,8 +297,7 @@ int main()
                 }
             }
         }
-       // printf("%d-ieme iteration - rayon du voisinage:%d\n",i,(int)reseau->rv);
-    }
+     }
     reseau->alpha/=10;
     for (i=0;i<N.phase2;i++) {
         MatriceDon=Shuffle(MatriceDon);
